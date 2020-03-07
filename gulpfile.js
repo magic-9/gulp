@@ -5,7 +5,7 @@ var browser = require("browser-sync");
 var rename = require("gulp-rename");
 var autoprefixer = require("gulp-autoprefixer");
 var sourcemaps = require("gulp-sourcemaps");
-
+const image = require('gulp-image');
 
 gulp.task("sass", function() {
 
@@ -24,6 +24,23 @@ gulp.task("bootstrap", function() {
 
 });
 
+gulp.task('image', () => {
+    gulp.src('./images/*')
+        .pipe(image({
+            pngquant: true,
+            optipng: false,
+            zopflipng: true,
+            jpegRecompress: false,
+            mozjpeg: true,
+            guetzli: false,
+            gifsicle: true,
+            svgo: true,
+            concurrent: 10,
+            quiet: true // defaults to false
+        }))
+        .pipe(gulp.dest('./dist/images'));
+});
+
 gulp.task("watches", function() {
     browser.init({
         server: {
@@ -35,5 +52,5 @@ gulp.task("watches", function() {
 
 gulp.watch("src/scss/*.scss", gulp.parallel("sass"));
 gulp.watch("src/scss/*.scss", gulp.parallel("sass"));
-
-gulp.task("default", gulp.parallel('sass', 'bootstrap', 'watches'));
+gulp.watch("images/", gulp.parallel("image"))
+gulp.task("default", gulp.parallel('sass', 'bootstrap', 'watches', ));
