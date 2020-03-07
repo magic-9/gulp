@@ -1,0 +1,1 @@
+  npm i gulp-autoprefixer browser-sync gulp-sass gulp-sourcemaps gulp-rename gulp-concat gulp-imagemin --save-dev
